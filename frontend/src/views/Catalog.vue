@@ -3,7 +3,7 @@
     <h1>{{ t('catalogTitle') }}</h1>
     <div class="Products-grid">
       <!-- 1. Начинаем цикл по товарам -->
-      <div v-for="product in products" :key="product.id" class="Products-card">
+      <div v-for="product in displayedProducts" :key="product.id" class="Products-card">
         
         <!-- 2. Блок карусели картинок (везде заменяем p на product) -->
         <div v-if="product.images && product.images.length" class="catalog-carousel-wrapper">
@@ -30,9 +30,9 @@
         <!-- 4. Описание и информация о товаре -->
         <div class="product-info-block">
           <router-link :to="`/catalog/${product.id}`" class="product-title-link">
-            {{ product.name }}
+            {{ product.displayName }}
           </router-link>
-          <p class="Products-description">{{ product.description }}</p>
+          <p class="Products-description">{{ product.displayDescription }}</p>
           <p class="product-price">{{ t('price') }}: {{ product.price }} {{ currencySymbol }}</p>
         </div>
 
@@ -44,10 +44,119 @@
 
 
 <script setup>
+import { computed } from 'vue';
 import { useCatalogPage, useI18n } from './Main.js';
 
 const { products, currencySymbol } = useCatalogPage();
-const { t } = useI18n();
+const { locale, t } = useI18n();
+
+const englishProductTranslations = {
+  'Стул обеденный Лофт': {
+    name: 'Loft Dining Chair',
+    description:
+      'A comfortable chair with a sturdy metal frame and a cushioned seat.',
+  },
+  'Стол письменный Норд': {
+    name: 'Nord Writing Desk',
+    description: 'A compact desk with a spacious work surface.',
+  },
+  'Книжный стеллаж Лайн': {
+    name: 'Line Bookshelf',
+    description: 'Open shelving for books, decor, and everyday essentials.',
+  },
+  'Настольная лампа Орбита': {
+    name: 'Orbita Table Lamp',
+    description: 'A minimalist lamp with an adjustable light direction.',
+  },
+  'Кофейный столик Модерн': {
+    name: 'Modern Coffee Table',
+    description: 'A compact living room table with sturdy legs.',
+  },
+  'Кресло Релакс': {
+    name: 'Relax Armchair',
+    description: 'A soft, high-back armchair for relaxing and reading.',
+  },
+  'Комод Сканди': {
+    name: 'Scandi Dresser',
+    description: 'A dresser with spacious drawers for clothes and accessories.',
+  },
+  'Зеркало настенное Арка': {
+    name: 'Arka Wall Mirror',
+    description:
+      'A wall mirror with a minimalist frame, ideal for an entryway or bedroom.',
+  },
+  'Кровать двуспальная Эко': {
+    name: 'Eco Double Bed',
+    description: 'A double bed with a sturdy base and understated design.',
+  },
+  'Тумба прикроватная Компакт': {
+    name: 'Compact Bedside Table',
+    description: 'A practical bedside table with a drawer and an open shelf.',
+  },
+};
+
+const ukrainianProductTranslations = {
+  'Стул обеденный Лофт': {
+    name: 'Обідній стілець «Лофт»',
+    description:
+      'Зручний стілець із міцним металевим каркасом і м’яким сидінням.',
+  },
+  'Стол письменный Норд': {
+    name: 'Письмовий стіл «Норд»',
+    description: 'Компактний письмовий стіл із просторою робочою поверхнею.',
+  },
+  'Книжный стеллаж Лайн': {
+    name: 'Книжковий стелаж «Лайн»',
+    description: 'Відкритий стелаж для книжок, декору та домашніх дрібниць.',
+  },
+  'Настольная лампа Орбита': {
+    name: 'Настільна лампа «Орбіта»',
+    description: 'Лаконічна лампа з регульованим напрямком світла.',
+  },
+  'Кофейный столик Модерн': {
+    name: 'Журнальний столик «Модерн»',
+    description: 'Невеликий столик для вітальні зі стійкими ніжками.',
+  },
+  'Кресло Релакс': {
+    name: 'Крісло «Релакс»',
+    description: 'М’яке крісло з високою спинкою для відпочинку та читання.',
+  },
+  'Комод Сканди': {
+    name: 'Комод «Сканди»',
+    description:
+      'Комод із місткими шухлядами для зберігання одягу та аксесуарів.',
+  },
+  'Зеркало настенное Арка': {
+    name: 'Настінне дзеркало «Арка»',
+    description:
+      'Настінне дзеркало в мінімалістичній рамі для передпокою або спальні.',
+  },
+  'Кровать двуспальная Эко': {
+    name: 'Двоспальне ліжко «Еко»',
+    description: 'Двоспальне ліжко з міцною основою та стриманим дизайном.',
+  },
+  'Тумба прикроватная Компакт': {
+    name: 'Приліжкова тумба «Компакт»',
+    description: 'Практична тумба з висувною шухлядою та відкритою полицею.',
+  },
+};
+
+const displayedProducts = computed(() =>
+  products.value.map((product) => {
+    const translation =
+      locale.value === 'en'
+        ? englishProductTranslations[product.name]
+        : locale.value === 'uk'
+          ? ukrainianProductTranslations[product.name]
+          : undefined;
+
+    return {
+      ...product,
+      displayName: translation?.name || product.name,
+      displayDescription: translation?.description || product.description,
+    };
+  }),
+);
 </script>
 
 

@@ -1,0 +1,12 @@
+Django>=6.1,<6.2
+djangorestframework
+django-cors-headers
+dj-rest-auth
+django-allauth
+djangorestframework-simplejwt
+django-unfold
+django-money
+django-payments
+django-phonenumber-field[phonenumbers]
+Pillow
+stripe
