@@ -10,3 +10,5 @@ django-payments
 django-phonenumber-field[phonenumbers]
 Pillow
 stripe
+gunicorn
+whitenoise
