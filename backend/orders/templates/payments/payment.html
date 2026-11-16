@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Тестовая оплата заказа №{{ payment.order.id }}</title>
+    <style>
+        body { font-family: sans-serif; max-width: 450px; margin: 60px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        select, input, button { width: 100%; padding: 10px; margin-top: 10px; box-sizing: border-box; }
+        button { background-color: #28a745; color: white; border: none; font-size: 16px; cursor: pointer; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h2>Тестовый шлюз оплаты</h2>
+    <p><strong>Заказ:</strong> №{{ payment.order.id }}</p>
+    <p><strong>Сумма:</strong> {{ payment.total }} {{ payment.currency }}</p>
+
+    <form action="{{ form.action }}" method="{{ form.method }}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Подтвердить платеж</button>
+    </form>
+</body>
+</html>
