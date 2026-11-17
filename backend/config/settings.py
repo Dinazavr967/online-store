@@ -240,4 +240,5 @@ PAYMENT_VARIANTS = {
         'capture': True,
     }),
 }
-CSRF_TRUSTED_ORIGINS = ['https://onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://online-store-t5ab.onrender.com/']
+
