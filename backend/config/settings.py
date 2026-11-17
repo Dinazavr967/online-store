@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-^xq5l-jck@sa=%kh*-_9nv$v1wnf7sp1c!l1%(po-fjydua+)m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['online-store-t5ab.onrender.com', 'localhost', 'http://127.0.0.1:8000/']
+ALLOWED_HOSTS = ['https://online-store-frontend-bpov.onrender.com/', 'localhost', 'https://online-store-t5ab.onrender.com/']
 
 
 # Application definition
