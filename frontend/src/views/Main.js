@@ -2,7 +2,7 @@ import { computed, onMounted, ref, toValue, watch } from 'vue';
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
 
-const API_URL = 'http://127.0.0.1:8000/api';
+const API_URL = 'https://online-store-t5ab.onrender.com/api';
 
 const messages = {
   ru: {
